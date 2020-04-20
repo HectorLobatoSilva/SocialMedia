@@ -1,0 +1,37 @@
+{% extends "stream.html" %}
+
+{% block content %}
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <table class="table table-sm">
+                <thead class="black white-text">
+                    <tr>
+                        <th> Post </th>
+                        <th> Followers </th>
+                        <th> Following </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td> {{ user.posts.count() }} </td>
+                        <td> {{ user.followers().count() }} </td>
+                        <td> {{ user.following().count() }} </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12">
+            {% if current_user.is_authenticated %}
+                {% if user != current_user %}
+                    {% if not user in current_user.following() %}
+                        <a href="{{ url_for( 'follow', username = user.username ) }}" class="btn btn-success">Follow</a>
+                    {% else %}
+                        <a href="{{ url_for( 'unfollow', username = user.username ) }}" class="btn btn-danger">Unfollow</a>
+                    {% endif %}
+                    
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    {{ super() }}
+{% endblock %} 

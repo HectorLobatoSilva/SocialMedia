@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    {% for post in stream %}
+        <div class="card mt-3">
+            <div class="card-body">
+                <div class="card-title">
+                    <a href=" {{ url_for( 'stream', username = post.user.username ) }} ">
+                        {{ post.user.username }}
+                    </a><br/>
+                    <cite title="Source Title"> {{ post.timestamp.strftime( '%d-%m-%Y %H:%S' ) }} </cite>
+                </div>
+                <div class="card-text">
+                    <!-- <time data-time = "{{ post.timestamp }}" class="disttime" datetime = "{{ post.timestamp.strftime( '%Y-%m-%d %H:%S' ) }}"> {{ post.timestamp.strftime( '%Y-%m-%d %H:%S' ) }} </time> -->
+                    <div class="post">
+                        {{ post.content }}
+                    </div>
+                    <a href="{{ url_for( 'view_post', post_id = post.id ) }}" class="btn btn-primary"> View </a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    
+{% endblock %}
